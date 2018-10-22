@@ -2,77 +2,64 @@
 <html lang="es" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Tabla de multiplicar</title>
+        <title>Calculadora</title>
     </head>
     <body>
         <?php
-        const OP = ["+","-","x",":","%"];
-
-        function selected($op1, $op2){
-            return $op1== $op2 ? "selected" : "";
+        require './aux.php';
+        const OP = ['+', '-', '*', '/'];
+        const PAR = ['op', 'op1', 'op2'];
+        $op1 = $op2 = $op = null;
+        $error = [];
+        // Comprobación de parámetros:
+        $par = array_keys($_GET);
+        sort($par);
+        if (empty($_GET)) {
+            $op1 = '0';
+            $op2 = '0';
+            $op = '+';
+        } elseif ($par == PAR) {
+            $op1 = trim($_GET['op1']);
+            $op2 = trim($_GET['op2']);
+            $op = trim($_GET['op']);
+        } else {
+            $error[] = "Los parámetros recibidos no son los correctos.";
         }
-
-        $num1 = isset($_GET['num1']) ? trim($_GET ['num1']) : '0';
-              $num2 = isset($_GET['num2']) ? trim($_GET ['num2']) : '0';
-              $op = isset($_GET['op']) ? trim($_GET ['op']) : '+';
-               ?>
-        <form action="" method="get">
-            <label for="num1"Número:>Primer operando:</label>
-            <input id="num1" type="text" name="num1" value="<?= $num1 ?>">
-            <label for="num2"Número:><br>Segundo operando:</label>
-            <input id="num2" type="text" name="num2" value="<?= $num2 ?>">
-            <select name="op"> 
-            <?php foreach (OP as $o): ?>
-            <option value="<?= $o ?>" <?= selected($op, $o) ?>>
-            <?= $o ?>
-            </option>
-            <?php endforeach ?>
-            </select><br>
-            <input type="submit" value="Calcular">
-        </form>
-
-        <?php
-        function mostrarError($err)
-        {
-          echo "<h3>Error: $err</h3>";
+        if (empty($error)) {
+            // Comprobación de valores:
+            if (!is_numeric($op1)) {
+                $error[] = "El primer operando no es un número.";
+            }
+            if (!is_numeric($op2)) {
+                $error[] = "El segundo operando no es un número.";
+            }
+            if (!in_array($op, OP)) {
+                $error[] = "El operador no es válido.";
+            }
         }
-        /**
-        * Muestra la tabla de multiplicar.
-        * @param  string|int $num El numero del cual sacar la tabla.
-        */
-        function calcular($num1, $num2, $op)
-        {
+        formulario($op1, $op2, $op, OP);
+        if (empty($error)):
+            $res = '';
             switch ($op) {
                 case '+':
-                    $calculo=$num1 + $num2;
+                    $res = $op1 + $op2;
                     break;
                 case '-':
-                    $calculo=$num1 - $num2;
+                    $res = $op1 - $op2;
                     break;
                 case '*':
-                    $calculo=$num1 * $num2;
+                    $res = $op1 * $op2;
                     break;
                 case '/':
-                    $calculo=$num1 / $num2;
-                    break;
-                case '%':
-                    $calculo=$num1 / $num2;
-                    break;
-                default:
-                    mostrarError("operacion erronea");
+                    $res = $op1 / $op2;
                     break;
             }
-
-            echo "El resultado es: $calculo";
-        }
-
-        if (!empty($num1)) {
-            if (!ctype_digit($num1)) {
-                mostrarError("por favor introduzca un numero.");
-            } else {
-                    calcular($num1, $num2, $op);
-            }
-        }
-        ?>
+            ?>
+            <h3>Resultado: <?= $res ?></h3>
+        <?php else:
+            foreach ($error as $err): ?>
+                <h3>Error: <?= $err ?></h3>
+            <?php endforeach;
+        endif ?>
     </body>
 </html>
