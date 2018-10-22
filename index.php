@@ -6,8 +6,8 @@
     </head>
     <body>
         <?php
+        const OP = ["+","-","x",":","%"];
 
-        
         function selected($op1, $op2){
             return $op1== $op2 ? "selected" : "";
         }
@@ -20,16 +20,15 @@
             <label for="num1"Número:>Primer operando:</label>
             <input id="num1" type="text" name="num1" value="<?= $num1 ?>">
             <label for="num2"Número:><br>Segundo operando:</label>
-            <input id="num2" type="text" name="num2" value="<?= $num2 ?>"> <!--id y name no tienen por qué llamarse igual, pero for e id sí-->
-            <label for="operacion"Número:><br>Operacion:</label>
-            <select name="op"> <!--id y name no tienen por qué llamarse igual, pero for e id sí-->
-                <option value="+" <?= selected($op, '+') ?>>+</option>
-                <option value="-" <?= selected($op, '-') ?> >-</option>
-                <option value="*" <?= selected($op, '*') ?> >x</option>
-                <option value="/" <?= selected($op, '/') ?> >:</option>
-                <option value="%" <?= selected($op, '%') ?> >%</option>
+            <input id="num2" type="text" name="num2" value="<?= $num2 ?>">
+            <select name="op"> 
+            <?php foreach (OP as $o): ?>
+            <option value="<?= $o ?>" <?= selected($op, $o) ?>>
+            <?= $o ?>
+            </option>
+            <?php endforeach ?>
             </select><br>
-            <input type="submit" value="Calcular">  <!--Los botones a menos que sea interesante los vamos a hacer sin name-->
+            <input type="submit" value="Calcular">
         </form>
 
         <?php
