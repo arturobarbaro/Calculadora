@@ -5,9 +5,16 @@
         <title>Tabla de multiplicar</title>
     </head>
     <body>
-        <?php $num1 = isset($_GET['num1']) ? trim($_GET ['num1']) : '';
-              $num2 = isset($_GET['num2']) ? trim($_GET ['num2']) : '';
-              $op = isset($_GET['op']) ? trim($_GET ['op']) : '';
+        <?php
+
+        
+        function selected($op1, $op2){
+            return $op1== $op2 ? "selected" : "";
+        }
+
+        $num1 = isset($_GET['num1']) ? trim($_GET ['num1']) : '0';
+              $num2 = isset($_GET['num2']) ? trim($_GET ['num2']) : '0';
+              $op = isset($_GET['op']) ? trim($_GET ['op']) : '+';
                ?>
         <form action="" method="get">
             <label for="num1"Número:>Primer operando:</label>
@@ -15,8 +22,13 @@
             <label for="num2"Número:><br>Segundo operando:</label>
             <input id="num2" type="text" name="num2" value="<?= $num2 ?>"> <!--id y name no tienen por qué llamarse igual, pero for e id sí-->
             <label for="operacion"Número:><br>Operacion:</label>
-            <input id="operacion" type="text" name="op" value="<?= $op ?>"> <!--id y name no tienen por qué llamarse igual, pero for e id sí-->
-            <br>
+            <select name="op"> <!--id y name no tienen por qué llamarse igual, pero for e id sí-->
+                <option value="+" <?= selected($op, '+') ?>>+</option>
+                <option value="-" <?= selected($op, '-') ?> >-</option>
+                <option value="*" <?= selected($op, '*') ?> >x</option>
+                <option value="/" <?= selected($op, '/') ?> >:</option>
+                <option value="%" <?= selected($op, '%') ?> >%</option>
+            </select><br>
             <input type="submit" value="Calcular">  <!--Los botones a menos que sea interesante los vamos a hacer sin name-->
         </form>
 
@@ -34,6 +46,18 @@
             switch ($op) {
                 case '+':
                     $calculo=$num1 + $num2;
+                    break;
+                case '-':
+                    $calculo=$num1 - $num2;
+                    break;
+                case '*':
+                    $calculo=$num1 * $num2;
+                    break;
+                case '/':
+                    $calculo=$num1 / $num2;
+                    break;
+                case '%':
+                    $calculo=$num1 / $num2;
                     break;
                 default:
                     mostrarError("operacion erronea");
