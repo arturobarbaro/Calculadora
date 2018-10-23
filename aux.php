@@ -22,7 +22,7 @@ function selected($op1, $op2)
 * @param  string $p2 Segundo operador.
 * @param  string $op Operando.
 */
-function opera($p1, $p2, $op)
+function calcular($p1, $p2, $op)
 {
     switch ($op) {
         case '+':

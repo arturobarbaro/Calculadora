@@ -37,7 +37,7 @@
     form($p1, $p2, $op);
     if (empty($err)) {
         ?>
-        <h3>Resultado: <?= opera($p1, $p2, $op) ?></h3>
+        <h3>Resultado: <?= calcular($p1, $p2, $op) ?></h3>
         <?php
     } else {
         foreach ($err as $me) { ?>
