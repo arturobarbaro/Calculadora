@@ -26,8 +26,9 @@ function selected($op1, $op2)
 * @param  string $p2 Segundo operador.
 * @param  string $op Operando.
 */
-function calcular($p1, $p2, $op)
+function calcular(&$a)
 {
+    extract($a);
     switch ($op) {
         case '+':
         $res = $p1+$p2;
@@ -55,8 +56,9 @@ function calcular($p1, $p2, $op)
  * @param  [type] $op [description]
  * @return [type]     [description]
  */
-function form($p1, $p2, $op)
-{ ?>
+function form(&$a)
+{
+    extract($a); ?>
     <form action="" method="get">
         <label for="p1">Primer operando*: </label>
         <input id="p1" type="text" name="p1" value="<?= $p1 ?>"><br>
@@ -99,7 +101,8 @@ function compruebaParametros($par, &$err){
  * @param  [type] $err [description]
  * @return [type]      [description]
  */
-function compruebaValores($p1, $p2, $op, $ops, &$err){
+function compruebaValores(&$a, $ops, &$err){
+    extract($a);
     if (empty($err)) {
         if (!is_numeric($p1)) {
             $err[] = "El primer operando no es un numero.";
@@ -120,8 +123,9 @@ function compruebaValores($p1, $p2, $op, $ops, &$err){
  * @param [type] $op  [description]
  * @param [type] $err [description]
  */
-function mostrarResultado($p1, $p2, $op, &$err){
+function mostrarResultado(&$a){
+    extract($a);
     ?>
-    <h3>Resultado: <?= calcular($p1, $p2, $op) ?></h3>
+    <h3>Resultado: <?= calcular($a) ?></h3>
     <?php
 }

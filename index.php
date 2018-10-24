@@ -7,6 +7,7 @@
 <body>
     <?php
     //refactorizas para no recibir 3 parametros sino 1 en un array
+    //compact contrario al extract
     require './aux.php';
     const OP = ["+", "-", "*", "/"];
     const PAR = ["op"=>"+", "p1"=>"0", "p2"=>"0"];
@@ -15,14 +16,15 @@
 
     // Comprobacion de parametros
     extract(compruebaParametros(PAR, $error)); //Crea variables con los contenidos del array
+    $array = compact(extract(PAR));
 
     // Comprobacion de valores
-    compruebaValores($p1, $p2, $op, OP, $err);
+    compruebaValores($array, OP, $err);
 
-    form($p1, $p2, $op);
+    form($array);
 
     if (empty($err)){
-        mostrarResultado($p1, $p2, $op, $err);
+        mostrarResultado($array, $err);
     } else {
         mostrarErrores($err);
     }
