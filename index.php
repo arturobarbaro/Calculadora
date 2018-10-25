@@ -10,13 +10,13 @@
     //compact contrario al extract
     require './aux.php';
     const OP = ["+", "-", "*", "/"];
-    const PAR = ["op"=>"+", "p1"=>"0", "p2"=>"0"];
-
+    const PAR = ["op"=>"+", "p1"=>0, "p2"=>0];
+    
+    $array = PAR;
     $err = [];
 
     // Comprobacion de parametros
-    extract(compruebaParametros(PAR, $error)); //Crea variables con los contenidos del array
-    $array = compact(extract(PAR));
+    extract(compruebaParametros($array, $error)); //Crea variables con los contenidos del array
 
     // Comprobacion de valores
     compruebaValores($array, OP, $err);
