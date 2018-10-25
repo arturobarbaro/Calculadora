@@ -13,17 +13,12 @@
 
     $err = [];
 
-    // Comprobacion de parametros
-    extract(compruebaParametros(PAR, $error)); //Crea variables con los contenidos del array
-
-    // Comprobacion de valores
-    compruebaValores($p1, $p2, $op, OP, $err);
-
-    form($p1, $p2, $op);
-
-    if (empty($err)){
+    try {
+        extract(compruebaParametros(PAR, $error)); //Crea variables con los contenidos del array
+        compruebaValores($p1, $p2, $op, OP, $err);
+        form($p1, $p2, $op);
         mostrarResultado($p1, $p2, $op, $err);
-    } else {
+    } catch (Exception $e) {
         mostrarErrores($err);
     }
     ?>

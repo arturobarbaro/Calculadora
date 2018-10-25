@@ -73,6 +73,17 @@ function form($p1, $p2, $op)
 <?php }
 
 /**
+ *
+ * @param  [type] $error [description]
+ * @return [type]        [description]
+ */
+function compruebaErrores($error){
+    if(!empty($error)){
+        throw new Exception();
+    }
+}
+
+/**
  * Comprueba parametros
  * @param  [type] $par   [description]
  * @param  [type] $error [description]
@@ -111,6 +122,7 @@ function compruebaValores($p1, $p2, $op, $ops, &$err){
             $err[] = "El operador no es válido.";
         }
     }
+    compruebaErrores($err);
 }
 
 /**
